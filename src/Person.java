@@ -19,7 +19,7 @@ public class Person {
     }
 
     public boolean hasAge() {
-        return getAge() == null ? false : true;
+        return getAge().isEmpty() ? false : true;
     }
 
     public boolean hasAddress() {
@@ -35,7 +35,11 @@ public class Person {
     }
 
     public OptionalInt getAge() {
-        return OptionalInt.of(age);
+        if (age == 0) {
+            return OptionalInt.empty();
+        } else {
+            return OptionalInt.of(age);
+        }
     }
 
     public String getAddress() {
@@ -60,10 +64,17 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Имя: " + name +
-                "\nФамилия: " + surname +
-                "\nВозраст: " + age +
-                "\nТекущий город жительства: " + adress;
+        if (getAge().isPresent()) {
+            return "Имя: " + name +
+                    "\nФамилия: " + surname +
+                    "\nВозраст: " + age +
+                    "\nТекущий город жительства: " + adress;
+        } else {
+            return "Имя: " + name +
+                    "\nФамилия: " + surname +
+                    "\nВозраст: " + OptionalInt.empty() +
+                    "\nТекущий город жительства: " + adress;
+        }
     }
 
     @Override
